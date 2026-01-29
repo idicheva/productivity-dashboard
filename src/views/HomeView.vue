@@ -1,9 +1,7 @@
 <script setup>
-import TheWelcome from '../components/TheWelcome.vue'
+import ProductivityDashboard from '@/components/ProductivityDashboard.vue'
 </script>
 
 <template>
-  <main>
-    <TheWelcome />
-  </main>
+  <ProductivityDashboard />
 </template>

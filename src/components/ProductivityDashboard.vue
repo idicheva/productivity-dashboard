@@ -1,4 +1,5 @@
 <script setup>
+// import NoWidgets from './NoWidgets.vue'
 import WidgetCard from './WidgetCard.vue'
 </script>
 
@@ -11,4 +12,5 @@ import WidgetCard from './WidgetCard.vue'
     <WidgetCard />
     <WidgetCard />
   </div>
+  <!-- <NoWidgets /> -->
 </template>

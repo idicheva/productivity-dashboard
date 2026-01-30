@@ -3,5 +3,7 @@ import ProductivityDashboard from '@/components/ProductivityDashboard.vue'
 </script>
 
 <template>
-  <ProductivityDashboard />
+  <div class="flex justify-center items-center">
+    <ProductivityDashboard />
+  </div>
 </template>

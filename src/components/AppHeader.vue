@@ -1,3 +1,9 @@
+<script setup>
+import AddWidgetModal from './AddWidgetModal.vue'
+
+const openWidgetModal = () => document.getElementById('addWidgetModal').showModal()
+</script>
+
 <template>
   <div class="navbar shadow-sm">
     <div class="navbar-start">
@@ -6,7 +12,11 @@
       >
     </div>
     <div class="navbar-end">
-      <a class="btn btn-sm md:btn-md lg:btn-md"><i class="pi pi-plus"></i>Add Widget</a>
+      <button @click="openWidgetModal" class="btn btn-sm md:btn-md lg:btn-md">
+        <i class="pi pi-plus"></i>Add Widget
+      </button>
     </div>
   </div>
+
+  <AddWidgetModal id="addWidgetModal" />
 </template>

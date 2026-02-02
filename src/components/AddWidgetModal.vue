@@ -1,4 +1,15 @@
-<!-- TODO: add v-for for the widgets they may be an array of objects [{name: string, icon: string},...] -->
+<script setup>
+import { useWidgetsStore } from '@/stores/widgetsStore'
+import { storeToRefs } from 'pinia'
+
+const widgetsStore = useWidgetsStore()
+
+const { widgets, activeWidgets } = storeToRefs(widgetsStore)
+
+const addWidget = (widgetName) => {
+  widgetsStore.changeWidgetActiveState(widgetName, true)
+}
+</script>
 
 <template>
   <dialog class="modal">
@@ -10,28 +21,16 @@
       </form>
       <h3 class="text-lg font-bold mb-5">Add a Widget</h3>
       <div class="flex flex-col">
-        <button class="btn btn-soft btn-secondary mb-2">
+        <button
+          class="btn btn-soft btn-secondary mb-2"
+          v-for="widget in widgets"
+          :key="widget.name"
+          :disabled="activeWidgets.includes(widget.name)"
+          @click="addWidget(widget.name)"
+        >
           <i class="pi pi-plus"></i>
-          Pomodoro Timer
-          <div class="badge badge-secondary badge-soft"><i class="pi pi-clock"></i></div>
-        </button>
-
-        <button class="btn btn-soft btn-secondary mb-2">
-          <i class="pi pi-plus"></i>
-          To-Do List
-          <div class="badge badge-secondary badge-soft"><i class="pi pi-list-check"></i></div>
-        </button>
-
-        <button class="btn btn-soft btn-secondary mb-2">
-          <i class="pi pi-plus"></i>
-          Weather
-          <div class="badge badge-secondary badge-soft"><i class="pi pi-cloud"></i></div>
-        </button>
-
-        <button class="btn btn-soft btn-secondary">
-          <i class="pi pi-plus"></i>
-          Calendar
-          <div class="badge badge-secondary badge-soft"><i class="pi pi-calendar"></i></div>
+          {{ widget.label }}
+          <div class="badge badge-secondary badge-soft"><i :class="`pi ${widget.icon}`"></i></div>
         </button>
       </div>
     </div>

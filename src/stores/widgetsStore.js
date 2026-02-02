@@ -1,12 +1,16 @@
 import { defineStore } from 'pinia'
-import { computed, ref } from 'vue'
+import { computed, ref, watchEffect } from 'vue'
 
 export const useWidgetsStore = defineStore('widgets', () => {
-  const widgets = ref([
+  const defaultWidgets = [
     { name: 'pomodoro', label: 'Pomodoro Timer', icon: 'pi-clock', active: false },
     { name: 'todo', label: 'To-Do List', icon: 'pi-list-check', active: false },
     { name: 'weather', label: 'Weather', icon: 'pi-cloud', active: false },
-  ])
+  ]
+
+  const storedWidgets = JSON.parse(localStorage.getItem('widgets'))
+
+  const widgets = ref(storedWidgets || defaultWidgets)
 
   const activeWidgets = computed(() =>
     widgets.value.filter((widget) => widget.active).map((widget) => widget.name),
@@ -22,6 +26,13 @@ export const useWidgetsStore = defineStore('widgets', () => {
 
     widgets.value = updatedWidgets
   }
+
+  watchEffect(() => {
+    localStorage.setItem(
+      'widgets',
+      JSON.stringify(storedWidgets === null ? defaultWidgets : widgets.value),
+    )
+  })
 
   return { widgets, activeWidgets, changeWidgetActiveState }
 })

@@ -23,5 +23,5 @@ const openWidgetModal = () => document.getElementById('addWidgetModal').showModa
     </div>
   </div>
 
-  <AddWidgetModal id="addWidgetModal" />
+  <AddWidgetModal />
 </template>

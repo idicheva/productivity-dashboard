@@ -1,22 +1,18 @@
 <script setup>
 import { useWidgetsStore } from '@/stores/widgetsStore'
 import ConfirmationModal from './ConfirmationModal.vue'
-import { storeToRefs } from 'pinia'
 
 const props = defineProps({
-  widgetName: {
-    type: String,
+  widget: {
+    type: Object,
     required: true,
   },
 })
 
 const widgetsStore = useWidgetsStore()
-const { widgets } = storeToRefs(widgetsStore)
-
-const widget = widgets.value.find((widgetObj) => widgetObj.name === props.widgetName)
 
 const removeWidget = () => {
-  widgetsStore.changeWidgetActiveState(props.widgetName, false)
+  widgetsStore.changeWidgetActiveState(props.widget.name, false)
 }
 const openConfirmationModal = () => document.getElementById('confirmationModal').showModal()
 </script>
@@ -31,7 +27,8 @@ const openConfirmationModal = () => document.getElementById('confirmationModal')
           ></i>
         </button>
       </div>
-      <div>{{ widgetName }}</div>
+      <h1 class="card-title">{{ widget.label }}</h1>
+      <slot></slot>
     </div>
   </div>
   <ConfirmationModal :widgetLabel="widget.label" @deleteWidget="removeWidget" />

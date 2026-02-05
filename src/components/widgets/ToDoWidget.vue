@@ -24,11 +24,7 @@
           <span class="text-xs uppercase font-semibold opacity-50"> Learn Vue.js </span>
         </div>
       </div>
-      <input
-        type="checkbox"
-        :checked="isChecked"
-        class="checkbox checkbox-xs checkbox-secondary self-center"
-      />
+      <input type="checkbox" class="checkbox checkbox-xs checkbox-secondary self-center" />
     </li>
 
     <li class="list-row">
@@ -40,11 +36,7 @@
           <span class="text-xs uppercase font-semibold opacity-50"> Create a Vue.js APP </span>
         </div>
       </div>
-      <input
-        type="checkbox"
-        :checked="isChecked"
-        class="checkbox checkbox-xs checkbox-secondary self-center"
-      />
+      <input type="checkbox" class="checkbox checkbox-xs checkbox-secondary self-center" />
     </li>
   </ul>
 </template>

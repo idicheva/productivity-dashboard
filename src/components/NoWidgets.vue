@@ -1,5 +1,11 @@
 <script setup>
-const openWidgetModal = () => document.getElementById('addWidgetModal').showModal()
+import { ref } from 'vue'
+import AddWidgetModal from './AddWidgetModal.vue'
+
+const addWidgetModal = ref(null)
+
+const openWidgetModal = () => addWidgetModal.value?.showModal()
+const closeWidgetModal = () => addWidgetModal.value?.closeModal()
 </script>
 
 <template>
@@ -32,4 +38,6 @@ const openWidgetModal = () => document.getElementById('addWidgetModal').showModa
       add one
     </p>
   </div>
+
+  <AddWidgetModal @addWidget="closeWidgetModal" ref="addWidgetModal" />
 </template>

@@ -3,12 +3,19 @@ import { computed, ref, watchEffect } from 'vue'
 
 export const useWidgetsStore = defineStore('widgets', () => {
   const defaultWidgets = [
-    { name: 'pomodoro', label: 'Pomodoro Timer', icon: 'pi-clock', active: false },
-    { name: 'todo', label: 'To-Do List', icon: 'pi-list-check', active: false },
-    { name: 'weather', label: 'Weather', icon: 'pi-cloud', active: false },
+    { name: 'pomodoro', label: 'Pomodoro Timer', icon: 'pi-clock', active: false, config: {} },
+    {
+      name: 'todo',
+      label: 'To-Do List',
+      icon: 'pi-list-check',
+      active: false,
+      config: {},
+    },
+    { name: 'weather', label: 'Weather', icon: 'pi-cloud', active: false, config: {} },
   ]
 
   const storedWidgets = JSON.parse(localStorage.getItem('widgets'))
+  const todoId = ref(0)
 
   const widgets = ref(storedWidgets || defaultWidgets)
 
@@ -16,10 +23,37 @@ export const useWidgetsStore = defineStore('widgets', () => {
     widgets.value.filter((widget) => widget.active).map((widget) => widget.name),
   )
 
+  const getWidgetDetailsByName = (widgetName) => {
+    return widgets.value.find((widget) => widget.name === widgetName)
+  }
+
   const changeWidgetActiveState = (widgetName, shouldBeActive) => {
     const updatedWidgets = widgets.value.map((widget) => {
       if (widget.name === widgetName) {
         return { ...widget, active: shouldBeActive }
+      }
+      return widget
+    })
+
+    widgets.value = updatedWidgets
+  }
+
+  const addTodo = (todo) => {
+    const newTodo = {
+      id: todoId.value++,
+      text: todo,
+      completed: false,
+    }
+
+    const updatedWidgets = widgets.value.map((widget) => {
+      if (widget.name === 'todo') {
+        return {
+          ...widget,
+          config: {
+            ...widget.config,
+            todos: widget.config.todos ? [...widget.config.todos, newTodo] : [newTodo],
+          },
+        }
       }
       return widget
     })
@@ -34,5 +68,5 @@ export const useWidgetsStore = defineStore('widgets', () => {
     )
   })
 
-  return { widgets, activeWidgets, changeWidgetActiveState }
+  return { widgets, activeWidgets, getWidgetDetailsByName, changeWidgetActiveState, addTodo }
 })

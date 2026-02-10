@@ -22,8 +22,8 @@ const findWidgetByName = (widgetName) => widgets.value.find((widget) => widget.n
       :key="activeWidget"
       :widget="findWidgetByName(activeWidget)"
     >
-      <component :is="resolve(activeWidget)"
-    /></WidgetCard>
+      <component :is="resolve(activeWidget)" />
+    </WidgetCard>
   </div>
   <NoWidgets v-else />
 </template>

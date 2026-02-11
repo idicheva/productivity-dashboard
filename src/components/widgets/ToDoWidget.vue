@@ -39,7 +39,10 @@ const addTodo = () => {
       :key="todo.id"
     >
       <div>
-        <button class="btn btn-xs btn-circle btn-ghost">
+        <button
+          class="btn btn-xs btn-circle btn-ghost"
+          @click="() => widgetsStore.removeTodo(todo.id)"
+        >
           <i class="pi pi-times"></i>
         </button>
         <button class="btn btn-xs btn-circle btn-ghost">
@@ -48,10 +51,20 @@ const addTodo = () => {
       </div>
       <div class="list-col-grow">
         <div>
-          <span class="text-xs uppercase font-semibold opacity-50"> {{ todo.text }} </span>
+          <span
+            class="text-xs uppercase font-semibold opacity-55"
+            :class="{ 'line-through': todo.completed }"
+          >
+            {{ todo.text }}
+          </span>
         </div>
       </div>
-      <input type="checkbox" class="checkbox checkbox-xs checkbox-secondary self-center" />
+      <input
+        type="checkbox"
+        class="checkbox checkbox-xs checkbox-secondary self-center"
+        :checked="todo.completed"
+        @click="() => widgetsStore.toggleTodo(todo.id)"
+      />
     </li>
   </ul>
 </template>

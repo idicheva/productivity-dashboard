@@ -1,3 +1,4 @@
+import { nanoid } from 'nanoid'
 import { defineStore } from 'pinia'
 import { computed, ref, watchEffect } from 'vue'
 
@@ -9,14 +10,12 @@ export const useWidgetsStore = defineStore('widgets', () => {
       label: 'To-Do List',
       icon: 'pi-list-check',
       active: false,
-      config: {},
+      config: { todos: [] },
     },
     { name: 'weather', label: 'Weather', icon: 'pi-cloud', active: false, config: {} },
   ]
 
   const storedWidgets = JSON.parse(localStorage.getItem('widgets'))
-  const todoId = ref(0)
-
   const widgets = ref(storedWidgets || defaultWidgets)
 
   const activeWidgets = computed(() =>
@@ -40,33 +39,69 @@ export const useWidgetsStore = defineStore('widgets', () => {
 
   const addTodo = (todo) => {
     const newTodo = {
-      id: todoId.value++,
+      id: nanoid(),
       text: todo,
       completed: false,
     }
 
-    const updatedWidgets = widgets.value.map((widget) => {
-      if (widget.name === 'todo') {
-        return {
-          ...widget,
-          config: {
-            ...widget.config,
-            todos: widget.config.todos ? [...widget.config.todos, newTodo] : [newTodo],
-          },
-        }
-      }
-      return widget
-    })
+    const updatedWidgets = widgets.value.map((widget) =>
+      widget.name === 'todo'
+        ? {
+            ...widget,
+            config: {
+              ...widget.config,
+              todos: [...widget.config.todos, newTodo],
+            },
+          }
+        : widget,
+    )
 
     widgets.value = updatedWidgets
   }
 
-  watchEffect(() => {
-    localStorage.setItem(
-      'widgets',
-      JSON.stringify(storedWidgets === null ? defaultWidgets : widgets.value),
+  const toggleTodo = (todoId) => {
+    const updatedWidgets = widgets.value.map((widget) =>
+      widget.name === 'todo'
+        ? {
+            ...widget,
+            config: {
+              ...widget.config,
+              todos: widget.config.todos.map((todo) =>
+                todo.id === todoId ? { ...todo, completed: !todo.completed } : todo,
+              ),
+            },
+          }
+        : widget,
     )
+    widgets.value = updatedWidgets
+  }
+
+  const removeTodo = (todoId) => {
+    const updatedWidgets = widgets.value.map((widget) =>
+      widget.name === 'todo'
+        ? {
+            ...widget,
+            config: {
+              ...widget.config,
+              todos: widget.config.todos.filter((todo) => todo.id !== todoId),
+            },
+          }
+        : widget,
+    )
+    widgets.value = updatedWidgets
+  }
+
+  watchEffect(() => {
+    localStorage.setItem('widgets', JSON.stringify(widgets.value))
   })
 
-  return { widgets, activeWidgets, getWidgetDetailsByName, changeWidgetActiveState, addTodo }
+  return {
+    widgets,
+    activeWidgets,
+    getWidgetDetailsByName,
+    changeWidgetActiveState,
+    addTodo,
+    toggleTodo,
+    removeTodo,
+  }
 })

@@ -76,6 +76,23 @@ export const useWidgetsStore = defineStore('widgets', () => {
     widgets.value = updatedWidgets
   }
 
+  const editTodo = (todoId, updatedText) => {
+    const updatedWidgets = widgets.value.map((widget) =>
+      widget.name === 'todo'
+        ? {
+            ...widget,
+            config: {
+              ...widget.config,
+              todos: widget.config.todos.map((todo) =>
+                todo.id === todoId ? { ...todo, text: updatedText } : todo,
+              ),
+            },
+          }
+        : widget,
+    )
+    widgets.value = updatedWidgets
+  }
+
   const removeTodo = (todoId) => {
     const updatedWidgets = widgets.value.map((widget) =>
       widget.name === 'todo'
@@ -102,6 +119,7 @@ export const useWidgetsStore = defineStore('widgets', () => {
     changeWidgetActiveState,
     addTodo,
     toggleTodo,
+    editTodo,
     removeTodo,
   }
 })

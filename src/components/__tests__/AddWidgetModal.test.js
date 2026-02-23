@@ -6,6 +6,11 @@ import AddWidgetModal from '../AddWidgetModal.vue'
 describe('AddWidgetModal', () => {
   let pinia
 
+  const mountAddWidgetModal = () =>
+    mount(AddWidgetModal, {
+      global: { plugins: [pinia] },
+    })
+
   beforeEach(() => {
     pinia = createPinia()
     setActivePinia(pinia)
@@ -19,11 +24,7 @@ describe('AddWidgetModal', () => {
   })
 
   it('renders correctly', () => {
-    const wrapper = mount(AddWidgetModal, {
-      global: {
-        plugins: [pinia],
-      },
-    })
+    const wrapper = mountAddWidgetModal()
 
     expect(wrapper.get('[data-test="title"]').text()).toBe('Add a Widget')
     expect(wrapper.html()).toContain('Pomodoro Timer')
@@ -43,11 +44,7 @@ describe('AddWidgetModal', () => {
   })
 
   it('emits "addWidget"', async () => {
-    const wrapper = mount(AddWidgetModal, {
-      global: {
-        plugins: [pinia],
-      },
-    })
+    const wrapper = mountAddWidgetModal()
 
     const pomodoroButton = wrapper.get('[data-test="pomodoro"]')
     await pomodoroButton.trigger('click')
@@ -57,9 +54,7 @@ describe('AddWidgetModal', () => {
 
   it('closes when closeModal function is called', () => {
     const closeModalSpy = vi.spyOn(HTMLDialogElement.prototype, 'close')
-    const wrapper = mount(AddWidgetModal, {
-      global: { plugins: [pinia] },
-    })
+    const wrapper = mountAddWidgetModal()
 
     wrapper.vm.closeModal()
 

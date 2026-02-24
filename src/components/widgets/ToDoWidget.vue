@@ -30,13 +30,14 @@ const handleEditTodo = (todoId) => {
 
 <template>
   <form @submit.prevent="addTodo">
-    <div class="join">
-      <div>
-        <label class="input input-secondary input-sm join-item">
-          <input type="text" placeholder="Add a new task..." v-model.trim="todoInput" />
-        </label>
-      </div>
-      <button class="btn btn-secondary join-item btn-sm" type="submit">Add</button>
+    <div class="flex gap-3">
+      <input
+        class="input input-secondary input-sm"
+        type="text"
+        placeholder="What needs to be done?"
+        v-model.trim="todoInput"
+      />
+      <button class="btn btn-ghost btn-secondary btn-sm" type="submit">Add Task</button>
     </div>
   </form>
 

@@ -19,7 +19,7 @@ describe('useWidgetResolver', () => {
       },
     })
 
-    expect(wrapper.get('input[placeholder="Add a new task..."]')).not.toBe(null)
+    expect(wrapper.get('input[placeholder="What needs to be done?"]')).not.toBe(null)
     expect(wrapper.html()).toContain('No tasks yet')
   })
 })

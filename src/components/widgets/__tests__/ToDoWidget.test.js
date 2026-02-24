@@ -26,7 +26,7 @@ describe('ToDoWidget', () => {
   it('renders correctly when there are no tasks', () => {
     const wrapper = mountWidget()
 
-    expect(wrapper.get('[placeholder="Add a new task..."]')).toBeTruthy()
+    expect(wrapper.get('[placeholder="What needs to be done?"]')).toBeTruthy()
     expect(wrapper.html()).toContain('No tasks yet')
   })
 
@@ -48,8 +48,8 @@ describe('ToDoWidget', () => {
     const input = wrapper.get('input[type="text"]')
     await input.setValue('Task to remove')
 
-    const form = wrapper.get('form')
-    await form.trigger('submit')
+    const addTaskButton = wrapper.get('button[type=submit]')
+    await addTaskButton.trigger('submit')
 
     const removeButton = wrapper.get('button:has(.pi-times)')
     await removeButton.trigger('click')
@@ -63,8 +63,8 @@ describe('ToDoWidget', () => {
     const input = wrapper.get('input[type="text"]')
     await input.setValue('Toggle me')
 
-    const form = wrapper.get('form')
-    await form.trigger('submit')
+    const addTaskButton = wrapper.get('button[type=submit]')
+    await addTaskButton.trigger('submit')
 
     const checkbox = wrapper.get('input[type=checkbox]')
     await checkbox.trigger('click')
@@ -78,8 +78,8 @@ describe('ToDoWidget', () => {
     const input = wrapper.get('input[type="text"]')
     await input.setValue('Original Task')
 
-    const form = wrapper.get('form')
-    await form.trigger('submit')
+    const addTaskButton = wrapper.get('button[type=submit]')
+    await addTaskButton.trigger('submit')
 
     expect(wrapper.get('li span').text()).toBe('Original Task')
 

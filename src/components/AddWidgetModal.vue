@@ -30,11 +30,12 @@ const addWidget = (widgetName) => {
           <i class="pi pi-times"></i>
         </button>
 
-        <h3 class="text-lg font-bold mb-5">Add a Widget</h3>
+        <h3 class="text-lg font-bold mb-5" data-test="title">Add a Widget</h3>
         <div class="flex flex-col">
           <button
-            class="btn btn-soft btn-secondary mb-2"
             v-for="widget in widgets"
+            class="btn btn-soft btn-secondary mb-2"
+            :data-test="widget.name"
             :key="widget.name"
             :disabled="activeWidgets.includes(widget.name)"
             @click="addWidget(widget.name)"

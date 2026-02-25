@@ -1,8 +1,9 @@
 import { nanoid } from 'nanoid'
 import { defineStore } from 'pinia'
-import { computed, ref, watchEffect } from 'vue'
+import { computed, ref, watch } from 'vue'
 
 export const useWidgetsStore = defineStore('widgets', () => {
+  let storedWidgets
   const defaultWidgets = [
     { name: 'pomodoro', label: 'Pomodoro Timer', icon: 'pi-clock', active: false, config: {} },
     {
@@ -15,7 +16,12 @@ export const useWidgetsStore = defineStore('widgets', () => {
     { name: 'weather', label: 'Weather', icon: 'pi-cloud', active: false, config: {} },
   ]
 
-  const storedWidgets = JSON.parse(localStorage.getItem('widgets'))
+  try {
+    storedWidgets = JSON.parse(localStorage.getItem('widgets'))
+  } catch {
+    storedWidgets = null
+  }
+
   const widgets = ref(storedWidgets || defaultWidgets)
 
   const activeWidgets = computed(() =>
@@ -27,14 +33,10 @@ export const useWidgetsStore = defineStore('widgets', () => {
   }
 
   const changeWidgetActiveState = (widgetName, shouldBeActive) => {
-    const updatedWidgets = widgets.value.map((widget) => {
-      if (widget.name === widgetName) {
-        return { ...widget, active: shouldBeActive }
-      }
-      return widget
-    })
-
-    widgets.value = updatedWidgets
+    const widget = getWidgetDetailsByName(widgetName)
+    if (widget) {
+      widget.active = shouldBeActive
+    }
   }
 
   const addTodo = (todo) => {
@@ -44,73 +46,50 @@ export const useWidgetsStore = defineStore('widgets', () => {
       completed: false,
     }
 
-    const updatedWidgets = widgets.value.map((widget) =>
-      widget.name === 'todo'
-        ? {
-            ...widget,
-            config: {
-              ...widget.config,
-              todos: [...widget.config.todos, newTodo],
-            },
-          }
-        : widget,
-    )
+    const todoWidget = getWidgetDetailsByName('todo')
 
-    widgets.value = updatedWidgets
+    if (todoWidget) {
+      todoWidget.config.todos.push(newTodo)
+    }
   }
 
   const toggleTodo = (todoId) => {
-    const updatedWidgets = widgets.value.map((widget) =>
-      widget.name === 'todo'
-        ? {
-            ...widget,
-            config: {
-              ...widget.config,
-              todos: widget.config.todos.map((todo) =>
-                todo.id === todoId ? { ...todo, completed: !todo.completed } : todo,
-              ),
-            },
-          }
-        : widget,
-    )
-    widgets.value = updatedWidgets
+    const todoWidget = getWidgetDetailsByName('todo')
+
+    if (todoWidget) {
+      const todo = todoWidget.config.todos.find((item) => item.id === todoId)
+      if (todo) {
+        todo.completed = !todo.completed
+      }
+    }
   }
 
   const editTodo = (todoId, updatedText) => {
-    const updatedWidgets = widgets.value.map((widget) =>
-      widget.name === 'todo'
-        ? {
-            ...widget,
-            config: {
-              ...widget.config,
-              todos: widget.config.todos.map((todo) =>
-                todo.id === todoId ? { ...todo, text: updatedText } : todo,
-              ),
-            },
-          }
-        : widget,
-    )
-    widgets.value = updatedWidgets
+    const todoWidget = getWidgetDetailsByName('todo')
+
+    if (todoWidget) {
+      const todo = todoWidget.config.todos.find((item) => item.id === todoId)
+      if (todo) {
+        todo.text = updatedText
+      }
+    }
   }
 
   const removeTodo = (todoId) => {
-    const updatedWidgets = widgets.value.map((widget) =>
-      widget.name === 'todo'
-        ? {
-            ...widget,
-            config: {
-              ...widget.config,
-              todos: widget.config.todos.filter((todo) => todo.id !== todoId),
-            },
-          }
-        : widget,
-    )
-    widgets.value = updatedWidgets
+    const todoWidget = getWidgetDetailsByName('todo')
+
+    if (todoWidget) {
+      todoWidget.config.todos = todoWidget.config.todos.filter((item) => item.id !== todoId)
+    }
   }
 
-  watchEffect(() => {
-    localStorage.setItem('widgets', JSON.stringify(widgets.value))
-  })
+  watch(
+    widgets,
+    (value) => {
+      localStorage.setItem('widgets', JSON.stringify(value))
+    },
+    { deep: true },
+  )
 
   return {
     widgets,

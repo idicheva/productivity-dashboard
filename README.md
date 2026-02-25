@@ -4,7 +4,7 @@ This project is part of my frontend development practice and focuses on:
 
 - Component-based architecture
 - State management with Pinia
-- Writing unit tests
+- Writing tests
 
 ## Built With
 

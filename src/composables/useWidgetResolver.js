@@ -1,6 +1,6 @@
 import ToDoWidget from '@/components/widgets/ToDoWidget.vue'
 
-export function useWidgetResolver() {
+export const useWidgetResolver = () => {
   const widgets = {
     todo: ToDoWidget,
   }

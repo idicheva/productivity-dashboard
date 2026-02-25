@@ -1,17 +1,17 @@
 <script setup>
-import { useWidgetsStore } from '@/stores/widgetsStore'
+import { useTodosStore } from '@/stores/todosStore'
+import { storeToRefs } from 'pinia'
 import { ref } from 'vue'
 
-const widgetsStore = useWidgetsStore()
+const todosStore = useTodosStore()
+const { todos } = storeToRefs(todosStore)
 const todoInput = ref('')
 const editingTodoId = ref(null)
 const editingTodoText = ref('')
 
 const addTodo = () => {
-  if (todoInput.value !== '') {
-    widgetsStore.addTodo(todoInput.value)
-    todoInput.value = ''
-  }
+  todosStore.addTodo(todoInput.value)
+  todoInput.value = ''
 }
 
 const handleEditButtonClick = (todo) => {
@@ -20,10 +20,12 @@ const handleEditButtonClick = (todo) => {
 }
 
 const handleEditTodo = (todoId) => {
-  if (editingTodoText.value !== '') {
-    widgetsStore.editTodo(todoId, editingTodoText.value)
-    editingTodoText.value = ''
+  const originalText = todos.value.find((todo) => todo.id === todoId)?.text
+  if (editingTodoText.value && editingTodoText.value !== originalText) {
+    todosStore.editTodo(todoId, editingTodoText.value)
   }
+
+  editingTodoText.value = ''
   editingTodoId.value = null
 }
 </script>
@@ -37,42 +39,30 @@ const handleEditTodo = (todoId) => {
         placeholder="What needs to be done?"
         v-model.trim="todoInput"
       />
-      <button class="btn btn-ghost btn-secondary btn-sm" type="submit">Add Task</button>
+      <button class="btn btn-ghost btn-secondary btn-sm" :disabled="!todoInput" type="submit">
+        Add Task
+      </button>
     </div>
   </form>
 
-  <div
-    class="flex justify-center mt-10"
-    v-if="widgetsStore.getWidgetDetailsByName('todo').config.todos.length === 0"
-  >
+  <div class="flex justify-center mt-10" v-if="todos.length === 0">
     <div class="uppercase font-semibold opacity-50">No tasks yet</div>
   </div>
 
   <ul v-else class="list bg-base-100 rounded-box shadow-md overflow-y-scroll max-h-52">
-    <li
-      class="list-row hover:bg-secondary-content/40"
-      v-for="todo in widgetsStore.getWidgetDetailsByName('todo').config.todos"
-      :key="todo.id"
-    >
+    <li class="list-row hover:bg-secondary-content/40" v-for="todo in todos" :key="todo.id">
       <div>
-        <button
-          class="btn btn-xs btn-circle btn-ghost"
-          @click="() => widgetsStore.removeTodo(todo.id)"
-        >
+        <button class="btn btn-xs btn-circle btn-ghost" @click="todosStore.removeTodo(todo.id)">
           <i class="pi pi-times"></i>
         </button>
         <button
           v-if="editingTodoId === todo.id"
           class="btn btn-xs btn-circle btn-ghost"
-          @click="() => handleEditTodo(todo.id)"
+          @click="handleEditTodo(todo.id)"
         >
           <i class="pi pi-check"></i>
         </button>
-        <button
-          v-else
-          class="btn btn-xs btn-circle btn-ghost"
-          @click="() => handleEditButtonClick(todo)"
-        >
+        <button v-else class="btn btn-xs btn-circle btn-ghost" @click="handleEditButtonClick(todo)">
           <i class="pi pi-pencil"></i>
         </button>
       </div>
@@ -83,7 +73,7 @@ const handleEditTodo = (todoId) => {
             type="text"
             v-model.trim="editingTodoText"
             class="input input-secondary input-xs"
-            @keydown.enter="() => handleEditTodo(todo.id)"
+            @keydown.enter="handleEditTodo(todo.id)"
           />
           <span
             v-else
@@ -98,7 +88,7 @@ const handleEditTodo = (todoId) => {
         type="checkbox"
         class="checkbox checkbox-xs checkbox-secondary self-center"
         :checked="todo.completed"
-        @click="() => widgetsStore.toggleTodo(todo.id)"
+        @change="todosStore.toggleTodo(todo.id)"
       />
     </li>
   </ul>

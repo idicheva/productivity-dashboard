@@ -67,7 +67,7 @@ describe('ToDoWidget', () => {
     await addTaskButton.trigger('submit')
 
     const checkbox = wrapper.get('input[type=checkbox]')
-    await checkbox.trigger('click')
+    await checkbox.trigger('change')
 
     expect(wrapper.get('li span').classes()).toContain('line-through')
   })

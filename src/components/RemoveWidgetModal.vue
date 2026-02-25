@@ -2,6 +2,7 @@
 import { ref } from 'vue'
 
 const emit = defineEmits(['removeWidget'])
+
 defineProps({
   widgetLabel: {
     type: String,

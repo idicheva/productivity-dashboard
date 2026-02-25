@@ -11,6 +11,6 @@ describe('AppHeader', () => {
     })
 
     expect(wrapper.get('.navbar-start:has(.text-secondary)').text()).toBe('Productivity Dashboard')
-    expect(wrapper.get('.navbar-end:has(button)').text()).toBe('Add Widget')
+    expect(wrapper.get('[aria-label="Open Add Widget Modal"]').text()).toBe('Add Widget')
   })
 })

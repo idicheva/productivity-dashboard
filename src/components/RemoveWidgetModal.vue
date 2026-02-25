@@ -24,8 +24,14 @@ defineExpose({
       <p class="py-4">Are you sure that you want to remove this widget?</p>
       <div class="modal-action">
         <form method="dialog">
-          <button class="btn btn-secondary mr-2" @click="emit('removeWidget')">Continue</button>
-          <button class="btn">Discard</button>
+          <button
+            class="btn btn-secondary mr-2"
+            aria-label="Continue"
+            @click="emit('removeWidget')"
+          >
+            Continue
+          </button>
+          <button class="btn" aria-label="Discard">Discard</button>
         </form>
       </div>
     </div>

@@ -48,10 +48,10 @@ describe('ToDoWidget', () => {
     const input = wrapper.get('input[type="text"]')
     await input.setValue('Task to remove')
 
-    const addTaskButton = wrapper.get('button[type=submit]')
+    const addTaskButton = wrapper.get('[aria-label="Add Task"]')
     await addTaskButton.trigger('submit')
 
-    const removeButton = wrapper.get('button:has(.pi-times)')
+    const removeButton = wrapper.get('[aria-label="Remove Task to remove"]')
     await removeButton.trigger('click')
 
     expect(wrapper.html()).toContain('No tasks yet')
@@ -63,7 +63,7 @@ describe('ToDoWidget', () => {
     const input = wrapper.get('input[type="text"]')
     await input.setValue('Toggle me')
 
-    const addTaskButton = wrapper.get('button[type=submit]')
+    const addTaskButton = wrapper.get('[aria-label="Add Task"]')
     await addTaskButton.trigger('submit')
 
     const checkbox = wrapper.get('input[type=checkbox]')
@@ -78,16 +78,16 @@ describe('ToDoWidget', () => {
     const input = wrapper.get('input[type="text"]')
     await input.setValue('Original Task')
 
-    const addTaskButton = wrapper.get('button[type=submit]')
+    const addTaskButton = wrapper.get('[aria-label="Add Task"]')
     await addTaskButton.trigger('submit')
 
     expect(wrapper.get('li span').text()).toBe('Original Task')
 
-    const editButton = wrapper.get('button:has(.pi-pencil)')
+    const editButton = wrapper.get('[aria-label="Edit Original Task"]')
     await editButton.trigger('click')
 
     const editInput = wrapper.get('.list-col-grow input')
-    const saveButton = wrapper.get('button:has(.pi-check)')
+    const saveButton = wrapper.get('[aria-label="Save Todo"]')
 
     await editInput.setValue('Edited Task')
     await saveButton.trigger('click')

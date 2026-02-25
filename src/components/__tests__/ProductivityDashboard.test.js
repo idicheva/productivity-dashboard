@@ -29,7 +29,7 @@ describe('Productivity Dashboard', () => {
     const wrapper = mountDashboard()
 
     expect(wrapper.get('h1').text()).toBe('No Widgets Yet')
-    expect(wrapper.get('button').text()).toBe('here')
+    expect(wrapper.get('[aria-label="Open Add Widget Modal"]').text()).toBe('here')
   })
 
   it('renders widgets correctly', async () => {

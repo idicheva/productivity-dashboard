@@ -21,6 +21,7 @@ const closeWidgetModal = () => addWidgetModal.value?.closeModal()
       <button
         @click="openWidgetModal"
         class="btn btn-soft btn-secondary btn-sm md:btn-md lg:btn-md"
+        aria-label="Open Add Widget Modal"
       >
         <i class="pi pi-plus"></i>Add Widget
       </button>

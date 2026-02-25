@@ -39,7 +39,12 @@ const handleEditTodo = (todoId) => {
         placeholder="What needs to be done?"
         v-model.trim="todoInput"
       />
-      <button class="btn btn-ghost btn-secondary btn-sm" :disabled="!todoInput" type="submit">
+      <button
+        class="btn btn-ghost btn-secondary btn-sm"
+        aria-label="Add Task"
+        :disabled="!todoInput"
+        type="submit"
+      >
         Add Task
       </button>
     </div>
@@ -52,17 +57,27 @@ const handleEditTodo = (todoId) => {
   <ul v-else class="list bg-base-100 rounded-box shadow-md overflow-y-scroll max-h-52">
     <li class="list-row hover:bg-secondary-content/40" v-for="todo in todos" :key="todo.id">
       <div>
-        <button class="btn btn-xs btn-circle btn-ghost" @click="todosStore.removeTodo(todo.id)">
+        <button
+          class="btn btn-xs btn-circle btn-ghost"
+          :aria-label="`Remove ${todo.text}`"
+          @click="todosStore.removeTodo(todo.id)"
+        >
           <i class="pi pi-times"></i>
         </button>
         <button
           v-if="editingTodoId === todo.id"
           class="btn btn-xs btn-circle btn-ghost"
+          aria-label="Save Todo"
           @click="handleEditTodo(todo.id)"
         >
           <i class="pi pi-check"></i>
         </button>
-        <button v-else class="btn btn-xs btn-circle btn-ghost" @click="handleEditButtonClick(todo)">
+        <button
+          v-else
+          class="btn btn-xs btn-circle btn-ghost"
+          :aria-label="`Edit ${todo.text}`"
+          @click="handleEditButtonClick(todo)"
+        >
           <i class="pi pi-pencil"></i>
         </button>
       </div>

@@ -34,8 +34,14 @@ const closeWidgetModal = () => addWidgetModal.value?.closeModal()
     <h1 class="text-xl text-base-400 font-bold">No Widgets Yet</h1>
     <p class="text-base-400">
       Click
-      <button class="text-secondary hover:cursor-pointer" @click="openWidgetModal">here</button> to
-      add one
+      <button
+        class="text-secondary hover:cursor-pointer"
+        aria-label="Open Add Widget Modal"
+        @click="openWidgetModal"
+      >
+        here
+      </button>
+      to add one
     </p>
   </div>
 

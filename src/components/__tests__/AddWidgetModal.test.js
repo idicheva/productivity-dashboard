@@ -46,7 +46,7 @@ describe('AddWidgetModal', () => {
   it('emits "addWidget"', async () => {
     const wrapper = mountAddWidgetModal()
 
-    const pomodoroButton = wrapper.get('[data-test="pomodoro"]')
+    const pomodoroButton = wrapper.get('[aria-label="Add Pomodoro Timer"]')
     await pomodoroButton.trigger('click')
 
     expect(wrapper.emitted('addWidget')).toHaveLength(1)

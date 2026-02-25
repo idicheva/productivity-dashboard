@@ -26,7 +26,10 @@ const addWidget = (widgetName) => {
   <dialog class="modal" ref="addWidgetModalRef">
     <div class="modal-box">
       <form method="dialog">
-        <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
+        <button
+          class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
+          aria-label="Close Modal Button"
+        >
           <i class="pi pi-times"></i>
         </button>
 
@@ -35,7 +38,7 @@ const addWidget = (widgetName) => {
           <button
             v-for="widget in widgets"
             class="btn btn-soft btn-secondary mb-2"
-            :data-test="widget.name"
+            :aria-label="`Add ${widget.label}`"
             :key="widget.name"
             :disabled="activeWidgets.includes(widget.name)"
             @click="addWidget(widget.name)"
@@ -49,7 +52,7 @@ const addWidget = (widgetName) => {
     </div>
 
     <form method="dialog" class="modal-backdrop">
-      <button>close</button>
+      <button aria-label="Close Backdrop Button">Close</button>
     </form>
   </dialog>
 </template>

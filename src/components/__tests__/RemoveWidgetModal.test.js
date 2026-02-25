@@ -33,7 +33,7 @@ describe('RemoveWidgetModal', () => {
   it('emits "removeWidget"', async () => {
     const wrapper = mount(RemoveWidgetModal)
 
-    const removeWidgetButton = wrapper.findAll('button').find((btn) => btn.text() === 'Continue')
+    const removeWidgetButton = wrapper.find('[aria-label="Continue"]')
 
     expect(removeWidgetButton).toBeTruthy()
 

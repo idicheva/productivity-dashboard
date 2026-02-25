@@ -12,13 +12,6 @@ describe('ToDoWidget', () => {
     })
 
   beforeEach(() => {
-    vi.restoreAllMocks()
-
-    vi.stubGlobal('localStorage', {
-      getItem: vi.fn(() => null),
-      setItem: vi.fn(),
-    })
-
     pinia = createPinia()
     setActivePinia(pinia)
   })

@@ -3,9 +3,14 @@ import { mount } from '@vue/test-utils'
 import RemoveWidgetModal from '../RemoveWidgetModal.vue'
 
 describe('RemoveWidgetModal', () => {
+  const mountRemoveWidgetModal = () =>
+    mount(RemoveWidgetModal, {
+      props: { widgetLabel: 'Test' },
+    })
+
   beforeEach(() => {
-    HTMLDialogElement.prototype.showModal ??= () => {}
-    HTMLDialogElement.prototype.close ??= () => {}
+    HTMLDialogElement.prototype.showModal ??= vi.fn()
+    HTMLDialogElement.prototype.close ??= vi.fn()
   })
 
   afterEach(() => {
@@ -13,9 +18,7 @@ describe('RemoveWidgetModal', () => {
   })
 
   it('renders correctly', () => {
-    const wrapper = mount(RemoveWidgetModal, {
-      props: { widgetLabel: 'Test' },
-    })
+    const wrapper = mountRemoveWidgetModal()
 
     expect(wrapper.get('[data-test="title"]').text()).toBe('Remove Test Widget')
     expect(wrapper.get('p').text()).toBe('Are you sure that you want to remove this widget?')
@@ -23,7 +26,7 @@ describe('RemoveWidgetModal', () => {
 
   it('opens when showModal is called', () => {
     const showModalSpy = vi.spyOn(HTMLDialogElement.prototype, 'showModal')
-    const wrapper = mount(RemoveWidgetModal)
+    const wrapper = mountRemoveWidgetModal()
 
     wrapper.vm.showModal()
 
@@ -31,7 +34,7 @@ describe('RemoveWidgetModal', () => {
   })
 
   it('emits "removeWidget"', async () => {
-    const wrapper = mount(RemoveWidgetModal)
+    const wrapper = mountRemoveWidgetModal()
 
     const removeWidgetButton = wrapper.find('[aria-label="Continue"]')
 

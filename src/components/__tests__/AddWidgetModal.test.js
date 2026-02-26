@@ -2,6 +2,8 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { mount } from '@vue/test-utils'
 import { createPinia, setActivePinia } from 'pinia'
 import AddWidgetModal from '../AddWidgetModal.vue'
+import { useWidgetsStore } from '@/stores/widgetsStore'
+import { nextTick } from 'vue'
 
 describe('AddWidgetModal', () => {
   let pinia
@@ -12,11 +14,12 @@ describe('AddWidgetModal', () => {
     })
 
   beforeEach(() => {
+    localStorage.clear()
     pinia = createPinia()
     setActivePinia(pinia)
 
-    HTMLDialogElement.prototype.showModal ??= () => {}
-    HTMLDialogElement.prototype.close ??= () => {}
+    HTMLDialogElement.prototype.showModal ??= vi.fn()
+    HTMLDialogElement.prototype.close ??= vi.fn()
   })
 
   afterEach(() => {
@@ -27,7 +30,18 @@ describe('AddWidgetModal', () => {
     const wrapper = mountAddWidgetModal()
 
     expect(wrapper.get('[data-test="title"]').text()).toBe('Add a Widget')
-    expect(wrapper.html()).toContain('Pomodoro Timer')
+    expect(wrapper.find('[aria-label="Add Pomodoro Timer"]').exists()).toBe(true)
+  })
+
+  it('disables widgets that are already active', async () => {
+    const wrapper = mountAddWidgetModal()
+    const widgetsStore = useWidgetsStore()
+
+    widgetsStore.changeWidgetActiveState('todo', true)
+    await nextTick()
+
+    const addTodoBtn = wrapper.get('[aria-label="Add To-Do List"]')
+    expect(addTodoBtn.attributes('disabled')).toBeDefined()
   })
 
   it('opens when showModal is called', () => {

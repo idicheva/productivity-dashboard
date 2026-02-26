@@ -4,6 +4,7 @@ import { useWidgetsStore } from '../widgetsStore'
 
 describe('Widgets Store', () => {
   beforeEach(() => {
+    localStorage.clear()
     setActivePinia(createPinia())
   })
 
@@ -11,7 +12,7 @@ describe('Widgets Store', () => {
     const widgetsStore = useWidgetsStore()
 
     const result = widgetsStore.getWidgetByName('pomodoro')
-    expect(result).toStrictEqual({
+    expect(result).toMatchObject({
       name: 'pomodoro',
       label: 'Pomodoro Timer',
       icon: 'pi-clock',

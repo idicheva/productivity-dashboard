@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeEach, vi } from 'vitest'
+import { describe, it, expect, beforeEach } from 'vitest'
 import { mount } from '@vue/test-utils'
 import { createPinia, setActivePinia } from 'pinia'
 import ToDoWidget from '../ToDoWidget.vue'
@@ -12,6 +12,7 @@ describe('ToDoWidget', () => {
     })
 
   beforeEach(() => {
+    localStorage.clear()
     pinia = createPinia()
     setActivePinia(pinia)
   })
@@ -41,8 +42,8 @@ describe('ToDoWidget', () => {
     const input = wrapper.get('input[type="text"]')
     await input.setValue('Task to remove')
 
-    const addTaskButton = wrapper.get('[aria-label="Add Task"]')
-    await addTaskButton.trigger('submit')
+    const form = wrapper.get('form')
+    await form.trigger('submit')
 
     const removeButton = wrapper.get('[aria-label="Remove Task to remove"]')
     await removeButton.trigger('click')
@@ -56,8 +57,8 @@ describe('ToDoWidget', () => {
     const input = wrapper.get('input[type="text"]')
     await input.setValue('Toggle me')
 
-    const addTaskButton = wrapper.get('[aria-label="Add Task"]')
-    await addTaskButton.trigger('submit')
+    const form = wrapper.get('form')
+    await form.trigger('submit')
 
     const checkbox = wrapper.get('input[type=checkbox]')
     await checkbox.trigger('change')
@@ -71,8 +72,8 @@ describe('ToDoWidget', () => {
     const input = wrapper.get('input[type="text"]')
     await input.setValue('Original Task')
 
-    const addTaskButton = wrapper.get('[aria-label="Add Task"]')
-    await addTaskButton.trigger('submit')
+    const form = wrapper.get('form')
+    await form.trigger('submit')
 
     expect(wrapper.get('li span').text()).toBe('Original Task')
 

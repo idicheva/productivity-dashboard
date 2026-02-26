@@ -1,6 +1,6 @@
 <script setup>
+import { useModal } from '@/composables/useModal'
 import RemoveWidgetModal from './RemoveWidgetModal.vue'
-import { ref } from 'vue'
 
 const emit = defineEmits(['removeWidget'])
 
@@ -11,9 +11,7 @@ const props = defineProps({
   },
 })
 
-const removeWidgetModal = ref(null)
-
-const openDeleteWidgetModal = () => removeWidgetModal.value?.showModal()
+const { modal: removeWidgetModal, showModal } = useModal()
 
 const handleRemoveWidget = () => {
   emit('removeWidget', props.widget.name)
@@ -24,7 +22,7 @@ const handleRemoveWidget = () => {
   <div class="card bg-base-100 h-90 w-80 shadow-lg">
     <div class="card-body">
       <div class="card-actions justify-end">
-        <button @click="openDeleteWidgetModal" :aria-label="`Remove ${widget.label}`">
+        <button @click="showModal" :aria-label="`Remove ${widget.label}`">
           <i
             class="pi pi-times-circle text-secondary hover:cursor-pointer hover:text-secondary/50"
           ></i>

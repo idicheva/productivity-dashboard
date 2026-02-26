@@ -1,11 +1,8 @@
 <script setup>
-import { ref } from 'vue'
+import { useModal } from '@/composables/useModal'
 import AddWidgetModal from './AddWidgetModal.vue'
 
-const addWidgetModal = ref(null)
-
-const openWidgetModal = () => addWidgetModal.value?.showModal()
-const closeWidgetModal = () => addWidgetModal.value?.closeModal()
+const { modal: addWidgetModal, showModal, close } = useModal()
 </script>
 
 <template>
@@ -19,7 +16,7 @@ const closeWidgetModal = () => addWidgetModal.value?.closeModal()
     </div>
     <div class="navbar-end">
       <button
-        @click="openWidgetModal"
+        @click="showModal"
         class="btn btn-soft btn-secondary btn-sm md:btn-md lg:btn-md"
         aria-label="Open Add Widget Modal"
       >
@@ -28,5 +25,5 @@ const closeWidgetModal = () => addWidgetModal.value?.closeModal()
     </div>
   </div>
 
-  <AddWidgetModal @addWidget="closeWidgetModal" ref="addWidgetModal" />
+  <AddWidgetModal @addWidget="close" ref="addWidgetModal" />
 </template>

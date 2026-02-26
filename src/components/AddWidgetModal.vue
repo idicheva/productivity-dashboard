@@ -9,7 +9,7 @@ const addWidgetModalRef = ref(null)
 
 defineExpose({
   showModal: () => addWidgetModalRef.value?.showModal(),
-  closeModal: () => addWidgetModalRef.value?.close(),
+  close: () => addWidgetModalRef.value?.close(),
 })
 
 const widgetsStore = useWidgetsStore()
@@ -52,7 +52,7 @@ const addWidget = (widgetName) => {
     </div>
 
     <form method="dialog" class="modal-backdrop">
-      <button aria-label="Close Backdrop Button">Close</button>
+      <button>Close</button>
     </form>
   </dialog>
 </template>

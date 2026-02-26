@@ -1,11 +1,8 @@
 <script setup>
-import { ref } from 'vue'
 import AddWidgetModal from './AddWidgetModal.vue'
+import { useModal } from '@/composables/useModal'
 
-const addWidgetModal = ref(null)
-
-const openWidgetModal = () => addWidgetModal.value?.showModal()
-const closeWidgetModal = () => addWidgetModal.value?.closeModal()
+const { modal: addWidgetModal, showModal, close } = useModal()
 </script>
 
 <template>
@@ -37,7 +34,7 @@ const closeWidgetModal = () => addWidgetModal.value?.closeModal()
       <button
         class="text-secondary hover:cursor-pointer"
         aria-label="Open Add Widget Modal"
-        @click="openWidgetModal"
+        @click="showModal"
       >
         here
       </button>
@@ -45,5 +42,5 @@ const closeWidgetModal = () => addWidgetModal.value?.closeModal()
     </p>
   </div>
 
-  <AddWidgetModal @addWidget="closeWidgetModal" ref="addWidgetModal" />
+  <AddWidgetModal @addWidget="close" ref="addWidgetModal" />
 </template>

@@ -70,7 +70,7 @@ describe('AddWidgetModal', () => {
     const closeModalSpy = vi.spyOn(HTMLDialogElement.prototype, 'close')
     const wrapper = mountAddWidgetModal()
 
-    wrapper.vm.closeModal()
+    wrapper.vm.close()
 
     expect(closeModalSpy).toHaveBeenCalledOnce()
   })

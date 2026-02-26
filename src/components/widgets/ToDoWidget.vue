@@ -1,13 +1,15 @@
 <script setup>
 import { useTodosStore } from '@/stores/todosStore'
 import { storeToRefs } from 'pinia'
-import { ref } from 'vue'
+import { reactive, ref } from 'vue'
 
 const todosStore = useTodosStore()
 const { todos } = storeToRefs(todosStore)
 const todoInput = ref('')
-const editingTodoId = ref(null)
-const editingTodoText = ref('')
+const editingTodo = reactive({
+  id: null,
+  text: '',
+})
 
 const addTodo = () => {
   todosStore.addTodo(todoInput.value)
@@ -15,18 +17,18 @@ const addTodo = () => {
 }
 
 const handleEditButtonClick = (todo) => {
-  editingTodoText.value = todo.text
-  editingTodoId.value = todo.id
+  editingTodo.id = todo.id
+  editingTodo.text = todo.text
 }
 
 const handleEditTodo = (todoId) => {
   const originalText = todos.value.find((todo) => todo.id === todoId)?.text
-  if (editingTodoText.value && editingTodoText.value !== originalText) {
-    todosStore.editTodo(todoId, editingTodoText.value)
+  if (editingTodo.text && editingTodo.text !== originalText) {
+    todosStore.editTodo(todoId, editingTodo.text)
   }
 
-  editingTodoText.value = ''
-  editingTodoId.value = null
+  editingTodo.text = ''
+  editingTodo.id = null
 }
 </script>
 
@@ -65,7 +67,7 @@ const handleEditTodo = (todoId) => {
           <i class="pi pi-times"></i>
         </button>
         <button
-          v-if="editingTodoId === todo.id"
+          v-if="editingTodo.id === todo.id"
           class="btn btn-xs btn-circle btn-ghost"
           aria-label="Save Todo"
           @click="handleEditTodo(todo.id)"
@@ -84,9 +86,9 @@ const handleEditTodo = (todoId) => {
       <div class="list-col-grow">
         <div>
           <input
-            v-if="editingTodoId === todo.id"
+            v-if="editingTodo.id === todo.id"
             type="text"
-            v-model.trim="editingTodoText"
+            v-model.trim="editingTodo.text"
             class="input input-secondary input-xs"
             @keydown.enter="handleEditTodo(todo.id)"
           />

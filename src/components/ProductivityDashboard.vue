@@ -16,7 +16,7 @@ const removeWidget = (widgetName) => {
 
 <template>
   <div
-    v-if="activeWidgets && activeWidgets.length > 0"
+    v-if="activeWidgets.length"
     class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 m-6"
   >
     <WidgetCard

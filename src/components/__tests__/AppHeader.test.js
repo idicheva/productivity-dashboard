@@ -6,8 +6,9 @@ import { createPinia, setActivePinia } from 'pinia'
 describe('AppHeader', () => {
   it('renders correctly', () => {
     const pinia = createPinia()
+    setActivePinia(pinia)
     const wrapper = mount(AppHeader, {
-      global: { plugins: [setActivePinia(pinia)] },
+      global: { plugins: [pinia] },
     })
 
     expect(wrapper.get('.navbar-start:has(.text-secondary)').text()).toBe('Productivity Dashboard')

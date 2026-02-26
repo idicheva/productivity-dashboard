@@ -4,6 +4,7 @@ import { useTodosStore } from '../todosStore'
 
 describe('Todos Store', () => {
   beforeEach(() => {
+    localStorage.clear()
     setActivePinia(createPinia())
   })
 

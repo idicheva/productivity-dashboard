@@ -11,6 +11,7 @@ This project is part of my frontend development practice and focuses on:
 - Vue 3
 - Pinia
 - Vitest
+- Vue Test Utils
 - Tailwind CSS
 - DaisyUI
 

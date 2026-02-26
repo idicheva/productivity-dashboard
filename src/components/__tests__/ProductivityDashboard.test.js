@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeEach, vi } from 'vitest'
+import { describe, it, expect, beforeEach } from 'vitest'
 import { mount } from '@vue/test-utils'
 import { createPinia, setActivePinia } from 'pinia'
 import ProductivityDashboard from '../ProductivityDashboard.vue'
@@ -14,6 +14,7 @@ describe('Productivity Dashboard', () => {
     })
 
   beforeEach(() => {
+    localStorage.clear()
     pinia = createPinia()
     setActivePinia(pinia)
   })

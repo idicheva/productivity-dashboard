@@ -59,7 +59,7 @@ const removeWidget = (widgetName) => {
   <NoWidgets v-else />
 </template>
 
-<style>
+<style scoped>
 .drag-chosen {
   opacity: 0.4;
 }

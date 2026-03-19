@@ -28,10 +28,9 @@ const currentModeLabel = computed(() => {
 const toggleTimer = () => {
   if (isRunning.value) {
     pomodoroStore.pauseTimer()
-    return
+  } else {
+    pomodoroStore.startTimer()
   }
-
-  pomodoroStore.startTimer()
 }
 </script>
 

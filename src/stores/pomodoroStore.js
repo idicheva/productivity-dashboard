@@ -1,13 +1,13 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
 
-export const MODES = {
+const MODES = {
   FOCUS: 'focus',
   SHORT_BREAK: 'shortBreak',
   LONG_BREAK: 'longBreak',
 }
 
-export const DEFAULT_DURATIONS = {
+const DEFAULT_DURATIONS = {
   [MODES.FOCUS]: 25,
   [MODES.SHORT_BREAK]: 5,
   [MODES.LONG_BREAK]: 15,

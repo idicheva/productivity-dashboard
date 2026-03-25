@@ -58,7 +58,7 @@ const handleEditTodo = (todoId) => {
 
   <ul v-else class="list bg-base-100 rounded-box shadow-md overflow-y-scroll max-h-52">
     <li class="list-row hover:bg-secondary-content/40" v-for="todo in todos" :key="todo.id">
-      <div>
+      <div class="flex items-center">
         <button
           class="btn btn-xs btn-circle btn-ghost"
           :aria-label="`Remove ${todo.text}`"

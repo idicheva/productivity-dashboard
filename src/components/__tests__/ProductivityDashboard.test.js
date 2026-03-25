@@ -38,4 +38,17 @@ describe('Productivity Dashboard', () => {
     expect(wrapper.get('.card')).toBeTruthy()
     expect(wrapper.get('.card-title').text()).toBe('Weather')
   })
+
+  it('renders pomodoro widget correctly', async () => {
+    const wrapper = mountDashboard()
+
+    const widgetsStore = useWidgetsStore()
+
+    widgetsStore.changeWidgetActiveState('pomodoro', true)
+
+    await nextTick()
+
+    expect(wrapper.get('.card-title').text()).toBe('Pomodoro Timer')
+    expect(wrapper.get('[data-test="pomodoro-time"]').text()).toBe('25:00')
+  })
 })

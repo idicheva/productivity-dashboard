@@ -46,10 +46,11 @@ export const usePomodoroStore = defineStore(
     const startTicker = () => {
       if (interval.value === null && isRunning.value) {
         interval.value = setInterval(() => {
-          if (remainingSeconds.value > 0) {
-            remainingSeconds.value -= 1
-          } else {
+          if (remainingSeconds.value <= 1) {
+            remainingSeconds.value = 0
             completeCurrentSession()
+          } else {
+            remainingSeconds.value -= 1
           }
         }, 1000)
       }

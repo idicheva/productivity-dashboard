@@ -36,21 +36,18 @@ const toggleTimer = () => {
 
 <template>
   <div class="flex flex-col gap-4">
-    <div class="flex self-center items-center gap-2">
-      <span class="text-xs uppercase font-semibold opacity-65">Mode:</span>
-      <span
-        class="text-xs font-semibold badge badge-secondary badge-soft"
-        data-test="pomodoro-mode"
-      >
+    <div class="flex self-center items-center text-xs font-semibold gap-2 m-2">
+      <span>Mode:</span>
+      <span class="text-secondary" data-test="pomodoro-mode">
         {{ currentModeLabel }}
       </span>
     </div>
 
-    <div class="text-center border border-base-300 rounded-lg p-5 mb-5">
-      <div class="text-4xl font-bold" data-test="pomodoro-time">
+    <div class="text-center border border-base-300 rounded-lg p-5 mb-3">
+      <div class="text-4xl font-bold text-secondary" data-test="pomodoro-time">
         {{ formattedTime }}
       </div>
-      <p class="text-xs uppercase font-semibold opacity-60 mt-2" data-test="pomodoro-sessions">
+      <p class="text-xs font-semibold opacity-50 mt-4" data-test="pomodoro-sessions">
         Focus sessions completed: {{ completedFocusSessions }}
       </p>
     </div>

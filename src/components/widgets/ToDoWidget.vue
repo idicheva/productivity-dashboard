@@ -53,10 +53,13 @@ const handleEditTodo = (todoId) => {
   </form>
 
   <div class="flex justify-center mt-10" v-if="todos.length === 0">
-    <div class="uppercase font-semibold opacity-50">No tasks yet</div>
+    <div class="font-semibold">No tasks yet</div>
   </div>
 
-  <ul v-else class="list bg-base-100 rounded-box shadow-md overflow-y-scroll max-h-52">
+  <ul
+    v-else
+    class="list bg-base-100 border border-base-300 rounded-lg mt-2 overflow-y-scroll max-h-55"
+  >
     <li class="list-row hover:bg-secondary-content/40" v-for="todo in todos" :key="todo.id">
       <div class="flex items-center">
         <button
@@ -94,8 +97,8 @@ const handleEditTodo = (todoId) => {
           />
           <span
             v-else
-            class="text-xs uppercase font-semibold opacity-55"
-            :class="{ 'line-through': todo.completed }"
+            class="text-xs font-semibold"
+            :class="{ 'line-through opacity-50': todo.completed }"
           >
             {{ todo.text }}
           </span>

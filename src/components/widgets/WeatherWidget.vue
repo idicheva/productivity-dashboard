@@ -13,7 +13,7 @@ const hasWeather = computed(() => weather.value !== null)
 //Return the appropriate weather icon based on the condition
 const weatherIcon = computed(() => {
   if (!weather.value) {
-    return 'default'
+    return ''
   }
 
   const condition = weather.value.condition.toLowerCase()
@@ -72,6 +72,7 @@ const handleLoadWeather = () => {
           <span>City:</span>
           <span class="text-secondary">{{ weather.city }}</span>
           <img
+            v-if="weatherIcon !== ''"
             :src="`/src/assets/images/${weatherIcon}`"
             alt="Weather Icon"
             class="inline w-10 h-10"

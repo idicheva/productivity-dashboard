@@ -20,7 +20,7 @@ export const useWeatherStore = defineStore(
       }
 
       const mockResult = getMockWeatherForLocation(location.value)
-      if (!mockResult) {
+      if (!mockResult && location.value !== '') {
         weather.value = null
         error.value = 'No weather data found for this city.'
       }
